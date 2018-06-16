@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const apiRouter = require('./api');
 const PORT = process.env.PORT || 8080;
 const app = express();
+const db = require('./db');
 
 module.exports = app;
 
