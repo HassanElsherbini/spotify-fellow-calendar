@@ -10,8 +10,7 @@ class Routes extends Component {
       <BrowserRouter>
         <Main>
           <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/calendar" component={Calendar} />
+            <Route exact path="/" component={Calendar} />
           </Switch>
         </Main>
       </BrowserRouter>
