@@ -14,7 +14,14 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
-        loaders: [{loader: 'babel-loader', query: { presets: ['env', 'react'] }}]
+        loaders: [
+          {loader: 'babel-loader', query: { presets: ['env', 'react'] }}
+        ]
+      },
+      {
+        test: /\.css$/,
+        exclude: /(node_modules|bower_components)/,
+        loader: 'style-loader!css-loader'
       }
     ]
   },
