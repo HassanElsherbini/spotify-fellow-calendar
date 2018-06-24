@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import Home from './components/Home';
-import Main from './components/Main';
-import Calendar from './containers/Calendar';
+import Main from './Main';
+import CalendarContainer from './calendar/CalendarContainer';
 
 class Routes extends Component {
   render() {
@@ -10,7 +9,7 @@ class Routes extends Component {
       <BrowserRouter>
         <Main>
           <Switch>
-            <Route exact path="/" component={Calendar} />
+            <Route exact path="/" component={CalendarContainer} />
           </Switch>
         </Main>
       </BrowserRouter>

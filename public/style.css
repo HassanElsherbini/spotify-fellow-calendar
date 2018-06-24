@@ -1,21 +1,20 @@
-html {
-  box-sizing: border-box;
-}
-
 body {
   font-family: sans-serif;
 }
-html, body {margin: 0; height: 100%; overflow: hidden}
+
 
 a {
   text-decoration: none;
 }
 
-label {
-  display: block;
+html,body,
+.wrapper{
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-.wrapper{
+.wrapper {
   display: grid;
-  height: 100%;
 }

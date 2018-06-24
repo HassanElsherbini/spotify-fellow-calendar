@@ -2,12 +2,14 @@ import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {createLogger} from 'redux-logger';
 import thunkMiddleware from 'redux-thunk';
 import events from './reducers/events';
-import currentDate from './reducers/currentDate';
+import selectedDate from './reducers/selectedDate';
+import selectedView from './reducers/selectedView';
 
 const rootReducer = combineReducers(
   {
     events,
-    currentDate
+    selectedDate,
+    selectedView
   }
 );
 
@@ -21,4 +23,5 @@ const store = createStore(rootReducer, middleware);
 
 export default store;
 export * from './reducers/events';
-export * from './reducers/currentDate';
+export * from './reducers/selectedDate';
+export * from './reducers/selectedView';

@@ -3,7 +3,7 @@ const isDev = process.env.NODE_ENV === 'development';
 
 module.exports = {
   mode: 'development',
-  entry: './CalendarFrontEnd/App.js',
+  entry: './CalendarFrontEnd/index.js',
   output: {
     path: __dirname,
     filename: './public/bundle.js'
@@ -15,7 +15,7 @@ module.exports = {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
         loaders: [
-          {loader: 'babel-loader', query: { presets: ['env', 'react'] }}
+          {loader: 'babel-loader', query: { presets: ['env', 'react'], plugins: ['babel-plugin-transform-class-properties'] }}
         ]
       },
       {

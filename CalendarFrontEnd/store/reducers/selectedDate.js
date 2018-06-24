@@ -6,7 +6,7 @@ const DATE_SET = 'DATE_SET';
 const setDate = date => ({type: DATE_SET, payload: date});
 
 /****THUNK CREATORS ****/
-export const updateCurrentDate = (date) => dispatch => {
+export const updateSelectedDate = (date) => dispatch => {
   dispatch(setDate(date));
 };
 
