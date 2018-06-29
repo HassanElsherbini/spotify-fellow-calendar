@@ -2,11 +2,11 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
 import {fetchAllEvents, updateSelectedDate, updateSelectedView} from '../store';
-import SingleDay from './generic/SingleDay';
 import CalendarNavBar from './generic/CalendarNavBar';
 import MonthView from './Month/MonthView';
 import WeekView from './Week/WeekView';
 import DayView from './Day/DayView';
+import { groupEventsByTime } from '../utility/helpers';
 import './calendar.css';
 
 class CalendarContainer extends Component{
@@ -47,34 +47,50 @@ class CalendarContainer extends Component{
     let firstOfMonth = new Date(currentYear, currentMonth, 1);
     let firstDayOfCalendar = new Date(firstOfMonth);
     let dayOfWeek = firstOfMonth.getDay();
-    firstDayOfCalendar.setDate(firstDayOfCalendar.getDate() - dayOfWeek);
+    firstDayOfCalendar.setDate(firstDayOfCalendar.getDate() - (dayOfWeek + 1));
 
     return this.generateDays(firstDayOfCalendar, 35);
-  }
-
-  generateDays(startDate, numOfDays){
-    let days = [startDate];
-    let nextDay = new Date(startDate);
-    let day;
-
-    for (let i = 1; i < numOfDays; i++){
-      day = nextDay.setDate(nextDay.getDate() + 1);
-      days.push(new Date(day));
-    }
-
-    return days;
   }
 
   getWeekViewDays(selectedDate){
     let dayOfWeek = selectedDate.getDay();
     let firstDayOfCalendar = new Date(selectedDate);
-    firstDayOfCalendar.setDate(firstDayOfCalendar.getDate() - dayOfWeek);
+    firstDayOfCalendar.setDate(firstDayOfCalendar.getDate() - (dayOfWeek + 1));
 
     return this.generateDays(firstDayOfCalendar, 7);
   }
 
   getDayViewDay(selectedDate){
-    return new Date(selectedDate);
+    let day = {};
+    day.date = new Date( selectedDate );
+    day.yymm = `${day.date.getFullYear()}${day.date.getMonth()}`;
+    day.dd = `${day.date.getDate()}`;
+    day.events = this.getDayEvents(day);
+
+    return day;
+  }
+
+  generateDays(startDate, numOfDays){
+    let days = [];
+    let nextDay = new Date(startDate);
+    let day, date;
+
+    for (let i = 0; i < numOfDays; i++){
+      day = {};
+      day.date = new Date( nextDay.setDate(nextDay.getDate() + 1) );
+      day.yymm = `${day.date.getFullYear()}${day.date.getMonth()}`;
+      day.dd = `${day.date.getDate()}`;
+      day.events = this.getDayEvents(day);
+      days.push(day);
+    }
+    return days;
+  }
+
+  getDayEvents(day){
+    let { events } = this.props;
+    if(events[day.yymm] && events[day.yymm][day.dd]) return events[day.yymm][day.dd];
+
+    return {};
   }
 
   handleDateChange = (direction) => {
@@ -100,8 +116,9 @@ class CalendarContainer extends Component{
 }
 
 const mapStateToProps = ({events, selectedDate, selectedView}) => {
+  let groupedEvents = groupEventsByTime(events);
   return {
-    events,
+    events: groupedEvents,
     selectedDate,
     selectedView
   };

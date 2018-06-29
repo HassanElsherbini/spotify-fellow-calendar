@@ -4,23 +4,50 @@ import SingleDay from '../generic/SingleDay';
 import HourLabels from '../generic/HourLabels';
 import CalendarHeader from '../generic/CalendarHeader';
 import {WEEK_DAYS} from '../../utility/constants';
+import HourList from '../generic/HourList';
+import Popup from 'reactjs-popup';
+import Icon from '@material-ui/core/Icon';
+
+import AddEvent from '../Event/AddEvent';
 
 const WeekView = ({days}) => {
+  let addEventBtn = (
+      <div className="addbtn-container" title="New event">
+      <Icon style={{ fontSize: 20 }} className="add-btn " color="primary"> add_circle </Icon>
+    </div>
+  );
+
   let dayLabels = WEEK_DAYS.map((name, indx) => {
-    let dayNum = days[indx].getDate();
+    let dayNum = days[indx].dd;
     return (
-      <div key={name} className="daylabel">
+      <div key={name} className="daylabel left-border">
         <div>{name}</div>
         <div>{dayNum}</div>
+        <Popup
+          key={indx}
+          trigger={addEventBtn}
+          closeOnDocumentClick
+          contentStyle ={contentStyle}
+          overlayStyle={overlayStyle}
+          modal
+        >
+          { close => ( <AddEvent day={days[indx]} close={close} time="7:00" /> ) }
+        </Popup>
       </div>
     );
   });
 
-  let hours = [];
   let dayList = [];
-  for (let i = 1; i < 24; i++) hours.push(<div key={i}className="hour"> </div>);
+  let day;
 
-  for (let i = 0; i < 7; i++) dayList.push(<SingleDay key={i} view={1} hours={hours} />);
+  for (let i = 0; i < 7; i++) {
+    day = (<SingleDay key={i}>
+            <div className="weekview-day">
+              <HourList day={days[i]} />
+            </div>
+           </SingleDay>);
+    dayList.push(day);
+  }
 
   return (
     <div className="calendar-multiday">
@@ -36,6 +63,15 @@ const WeekView = ({days}) => {
     </div>
 
   );
+};
+
+let contentStyle = {
+  width: "550px",
+  minHeight: "32vh",
+  paddingTop: "30px"
+};
+let overlayStyle = {
+  backgroundColor: "rgba(0, 0, 0, 0.5)"
 };
 
 export default WeekView;
