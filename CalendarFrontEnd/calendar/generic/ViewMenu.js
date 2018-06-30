@@ -28,7 +28,6 @@ class ViewMenu extends React.Component {
 
   handleSelection = (event, index) => {
     let { changeView } = this.props;
-    console.log(index)
     this.setState({selectedView: index, anchorElement: null});
     changeView(index);
   }
