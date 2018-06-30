@@ -3,7 +3,7 @@ import Popup from "reactjs-popup";
 import Icon from '@material-ui/core/Icon';
 
 import CalendarHeader from '../generic/CalendarHeader';
-import {WEEK_DAYS} from '../../utility/constants';
+import {WEEK_DAYS, MONTHS} from '../../utility/constants';
 import SingleDay from '../generic/SingleDay';
 import { getEventList, formatTime } from '../../utility/helpers';
 import EventForm from '../Event/EventForm';
@@ -33,10 +33,12 @@ const MonthView = (props) => {
       </div>);
 
     date = day.date.toDateString();
+    let dayInfoTxt = idx > 0 && day.date.getDate() === 1
+                    ? `${MONTHS[day.date.getMonth()]} ${day.dd}` : `${day.dd}`;
     let dayContainer = (
       <SingleDay todayDate={todayDate} date={date}>
         <div className="singleday-header">
-          <div className="daynum"> {day.dd}</div>
+          <div className="daynum"> {dayInfoTxt}</div>
             <Popup
               key={idx}
               trigger={addEventBtn}

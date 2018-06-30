@@ -3,7 +3,7 @@ import React from 'react';
 import SingleDay from '../generic/SingleDay';
 import HourLabels from '../generic/HourLabels';
 import CalendarHeader from '../generic/CalendarHeader';
-import {WEEK_DAYS} from '../../utility/constants';
+import {WEEK_DAYS, MONTHS} from '../../utility/constants';
 import HourList from '../generic/HourList';
 import Popup from 'reactjs-popup';
 import Icon from '@material-ui/core/Icon';
@@ -18,11 +18,13 @@ const WeekView = ({days}) => {
   );
 
   let dayLabels = WEEK_DAYS.map((name, indx) => {
-    let dayNum = days[indx].dd;
+    let day = days[indx];
+    let dayInfoTxt = indx > 0 && day.date.getDate() === 1
+                    ? `${MONTHS[day.date.getMonth()]} ${day.dd}` : `${day.dd}`;
     return (
       <div key={name} className="daylabel left-border">
         <div>{name}</div>
-        <div>{dayNum}</div>
+        <div>{dayInfoTxt}</div>
         <Popup
           key={indx}
           trigger={addEventBtn}
