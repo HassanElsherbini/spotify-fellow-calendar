@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build-client-watch": "webpack -w",
-    "start": "node CalendarBackEnd",
+    "start": "DB_URI='mongodb://hassan:masrawy7@ds123971.mlab.com:23971/calendar-fellow' node CalendarBackEnd",
     "postinstall": "webpack -p",
     "start-dev": "NODE_ENV='development' npm run build-client-watch & npm run start-server",
     "start-server": "nodemon CalendarBackEnd -e html,js,scss --ignore public"

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const DB_URI = 'mongodb://localhost/eventCalendar';
 
 mongoose.Promise = global.Promise;
-mongoose.connect(DB_URI || process.env.DB_URI);
+mongoose.connect(process.env.DB_URI || DB_URI);
 let db = mongoose.connection;
 
 // check connection
