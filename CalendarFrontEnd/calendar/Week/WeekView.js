@@ -8,9 +8,9 @@ import HourList from '../generic/HourList';
 import Popup from 'reactjs-popup';
 import Icon from '@material-ui/core/Icon';
 
-import AddEvent from '../Event/AddEvent';
+import EventForm from '../Event/EventForm';
 
-const WeekView = ({days}) => {
+const WeekView = ({days, selectedView}) => {
   let addEventBtn = (
       <div className="addbtn-container" title="New event">
       <Icon style={{ fontSize: 20 }} className="add-btn " color="primary"> add_circle </Icon>
@@ -31,7 +31,7 @@ const WeekView = ({days}) => {
           overlayStyle={overlayStyle}
           modal
         >
-          { close => ( <AddEvent day={days[indx]} close={close} time="7:00" /> ) }
+          { close => ( <EventForm day={days[indx]} close={close} time="7:00" /> ) }
         </Popup>
       </div>
     );
@@ -39,11 +39,13 @@ const WeekView = ({days}) => {
 
   let dayList = [];
   let day;
-
+  let todayDate = new Date().toDateString();
+  let date = '';
   for (let i = 0; i < 7; i++) {
-    day = (<SingleDay key={i}>
+    date = days[i].date.toDateString();
+    day = (<SingleDay key={i} todayDate={todayDate} date={date}>
             <div className="weekview-day">
-              <HourList day={days[i]} />
+              <HourList day={days[i]} selectedView={selectedView} />
             </div>
            </SingleDay>);
     dayList.push(day);

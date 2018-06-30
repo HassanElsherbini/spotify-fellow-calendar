@@ -7,7 +7,6 @@
 .calendar-container{
   display: grid;
   grid-template-columns: 257px auto;
-  /* border-bottom: #e0e0e0 1px solid; */
 }
 
 .calendar-monthview {
@@ -15,11 +14,11 @@
   grid-template-rows: auto 5fr;
   height: 93vh;
   overflow: hidden;
+  border-left: #e0e0e0 1px solid;
 }
 .calendar-multiday {
   display: grid;
   grid-template-rows: 80px 127vh;
-  border-bottom: #e0e0e0 1px solid;
 }
 
 .multiday-dayscontainer {
@@ -46,6 +45,7 @@
   display: grid;
   grid-template-rows: repeat(24, 1fr);
   border-right: #e0e0e0 1px solid;
+  border-left: #e0e0e0 1px solid;
 }
 .hourlabel {
   display: block;
@@ -68,6 +68,7 @@
   grid-template-columns: 1fr;
   border-bottom: #e0e0e0 1px solid;
   border-right: #e0e0e0 1px solid;
+  border-left: #e0e0e0 1px solid;
 }
 .calendar-days{
   display: grid;
@@ -84,9 +85,6 @@
   margin-left: 44px;
 }
 
-.calendar-sidebar{
-  border-right: #e0e0e0 1px solid;
-}
 
 #event-label {
   padding: 0 2px;
@@ -132,6 +130,8 @@
 .hour {
   max-width: 90%;
   display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-row-gap: .1em;
 }
 
 .daylabel-week {

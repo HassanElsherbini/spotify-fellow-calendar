@@ -1,25 +1,34 @@
 import React from 'react';
+import Button from '@material-ui/core/Button';
+import PrevIcon from '@material-ui/icons/ChevronLeft';
+import NextIcon from '@material-ui/icons/ChevronRight';
+
 import './calendarNavBar.css';
-import { VIEWS } from '../../utility/constants';
+import ViewMenu from './ViewMenu';
+import { MONTHS } from '../../utility/constants';
 
 const CalendarNavBar = (props) => {
-  let { onDateChange, onDateReset, onViewChange } = props;
+  let { onDateChange, onDateReset, onViewChange, date } = props;
   return (
     <div className="calendar-navbar">
       <div></div>
       <div className="date-nav">
         <div className="nav-controls">
-          <button id="reset-date" onClick={() => { onDateReset(); } }>today</button>
-          <button id="prev-date" onClick={() => { onDateChange(-1); } }>prev</button>
-          <button id="next-date" onClick={() => { onDateChange(1); } }>next</button>
+          <div className="controls">
+            <Button id= "nav-btn"
+              size="medium"
+              aria-haspopup="true"
+              onClick={() => { onDateReset(); } }
+            >Today </Button>
+            <PrevIcon className="pointer" id="prev-date" onClick={() => { onDateChange(-1); } } />
+            <NextIcon className="pointer" id="next-date" onClick={() => { onDateChange(1); } } />
+          </div>
         </div>
-        <div className="date-label"></div>
+        <div className="date-label">
+          {`${MONTHS[date.getMonth()]} ${date.getFullYear()}`}
+        </div>
       </div>
-      <div className="view-nav">
-          <button onClick={() => { onViewChange(0); } }>Month</button>
-          <button onClick={() => { onViewChange(1); } }>Week</button>
-          <button onClick={() => { onViewChange(2); } }>Day</button>
-      </div>
+      <ViewMenu changeView={(view) => { onViewChange(view); }} />
     </div>
   );
 };

@@ -3,10 +3,10 @@ import React from 'react';
 import './singleday.css';
 
 const SingleDay = (props) => {
-  let { children } = props;
-
+  let { children, todayDate, date} = props;
+  let className = todayDate === date ? 'singleday today' : 'singleday';
   return (
-    <div className="singleday" >
+    <div className= {className} >
     {
       children
     }

@@ -6,18 +6,19 @@ import TextField from '@material-ui/core/TextField';
 
 import { getTimeValues } from '../../utility/helpers';
 import { MONTHS, HOURS } from '../../utility/constants';
-import { createEvent } from '../../store';
-import TimePicker from '../generic/TImePicker';
+import { createEvent, updateEvent } from '../../store';
+import TimePicker from '../generic/TimePicker';
+import { getEventFormDefault, formatTime } from '../../utility/helpers';
+
 import './event.css';
 
-class AddEvent extends Component {
+class EventForm extends Component {
   constructor(props){
     super(props);
+    let {isEdit, event} = props;
+    let defaultValues = getEventFormDefault(event, isEdit);
     this.state = {
-      startTime: '',
-      endTime: '',
-      title: '',
-      description: '',
+      ...defaultValues,
       titleErrorTxt: '',
       startErrorTxt: '',
       endErrorTxt: ''
@@ -25,10 +26,12 @@ class AddEvent extends Component {
   }
 
   render(){
-    let { titleErrorTxt, startErrorTxt, endErrorTxt } = this.state;
-    let { day, closePrevious } = this.props;
-    let header = this.createHeader(day);
-    closePrevious();
+    let { titleErrorTxt, startErrorTxt,endErrorTxt,
+          title, description, startTime, endTime, date } = this.state;
+
+    let { day, isEdit, event} = this.props;
+    let header = this.createHeader(day, isEdit, event);
+
     return (
       <form className="addevent-form" onSubmit={this.handleSubmit}>
         <Typography style={styles.header} color="textSecondary">
@@ -37,6 +40,7 @@ class AddEvent extends Component {
         <div className="form-group">
           <TextField
               id="title"
+              defaultValue = {title}
               placeholder= "Add Title"
               required
               onChange={this.handleChange('title')}
@@ -47,14 +51,16 @@ class AddEvent extends Component {
         <TextField
           id="description"
           placeholder= "Description"
+          defaultValue= {description}
           multiline
           rows="2"
           rowsMax="3"
           onChange={this.handleChange('description')}
         />
 
-        <TimePicker handleChange={this.handleChange} startErrorTxt={startErrorTxt}
-                    endErrorTxt={endErrorTxt} />
+        <TimePicker handleChange={this.handleChange} isEdit={isEdit}
+                    startErrorTxt={startErrorTxt} endErrorTxt={endErrorTxt}
+                    startTime={startTime} endTime={endTime} date={date} />
 
         <Button type="submit" variant="contained" color="primary">
           save
@@ -85,7 +91,7 @@ class AddEvent extends Component {
     }
 
     let isValidTime = this.validateTime(errors, defaultErrMsg);
-    console.log(errors)
+
     this.setState({...this.state, ...errors});
 
     return !isValidTime || isError;
@@ -124,39 +130,63 @@ class AddEvent extends Component {
     return true;
   }
 
-  createHeader(day){
-    let header = `${MONTHS[day.date.getMonth()]}, ${day.dd}, ${day.date.getFullYear()}`;
+  createHeader(day, isEdit, event){
+    let header = '';
+    if(!isEdit) {
+      header = `${MONTHS[day.date.getMonth()]}, ${day.dd}`;
+    } else {
+      let start = new Date(event.startDate);
+      let end = new Date(event.endDate);
+
+      let startTime = formatTime(start);
+      let endTime = formatTime(end);
+      let month = start.getMonth();
+      let day = start.getDate();
+      let headerHour = `${startTime} - ${endTime}`;
+      header = `${MONTHS[month]}, ${day} (${headerHour})`;
+    }
 
     return header;
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
+
     let isErr = this.validate();
     if(!isErr){
-      let { startTime, endTime, title, description } = this.state;
-      let { day, addEvent, close, selectedView, hour } = this.props;
-      let startDate = new Date(day.date);
-      let endDate = new Date(day.date);
+      let { startTime, endTime, title, description, date } = this.state;
+      let { day, isEdit, addEvent, editEvent, event, close } = this.props;
 
       let starthhmm = getTimeValues(startTime);
       let endhhmm = getTimeValues(endTime);
-      startDate.setHours(starthhmm[0], starthhmm[1]);
-      endDate.setHours(endhhmm[0], endhhmm[1]);
+      let startDate, endDate;
+      if(!isEdit){
+        startDate = new Date(day.date);
+        endDate = new Date(day.date);
+        startDate.setHours(starthhmm[0], starthhmm[1]);
+        endDate.setHours(endhhmm[0], endhhmm[1]);
+      } else {
+         let yymmdd = date.split('-');
+         startDate = new Date(yymmdd[0],Number(yymmdd[1]) - 1, yymmdd[2], starthhmm[0], starthhmm[1]);
+         endDate = new Date(yymmdd[0],Number(yymmdd[1]) - 1, yymmdd[2], endhhmm[0], endhhmm[1]);
+      }
 
-      let event = {
+      let newEvent = {
         title,
         description,
         startDate,
         endDate
       }
 
-      addEvent(event);
+      if(!isEdit) addEvent(newEvent);
+      else {
+        newEvent._id = event._id;
+        editEvent(newEvent);
+      }
       close();
     }
   }
 }
-
 
 const styles = {
   header: {fontSize: 20}
@@ -165,7 +195,8 @@ const styles = {
 const mapDispatchToProps = (dispatch) => {
   return {
     addEvent: (newEvent) => dispatch(createEvent(newEvent)),
+    editEvent: (newEvent) => dispatch(updateEvent(newEvent))
   };
 };
 
-export default connect(null, mapDispatchToProps)(AddEvent);
+export default connect(null, mapDispatchToProps)(EventForm);

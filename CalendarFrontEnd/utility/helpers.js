@@ -73,7 +73,7 @@ export const formatTime = (time) => {
   if (hh === 0 ) hh = '12';
   else if (hh > 12) hh = hh % 12;
 
-  return `${hh}:${mm}${suffix}`;
+  return `${hh}:${mm} ${suffix}`;
 };
 
 export const getTimeValues = (timeStr) => {
@@ -82,4 +82,37 @@ export const getTimeValues = (timeStr) => {
   timeValues[1] = Number(timeValues[1]);
 
   return timeValues;
+};
+
+const zeroBasedTime = (value) => {
+  return value < 10 ? `0${value}` : `${value}`;
+};
+
+export const getEventFormDefault = (event, isEdit = false) => {
+  let defaultValues = {
+    title: '',
+    description: '',
+    startTime: '07:30',
+    endTime: '08:30'
+  };
+
+  if (isEdit){
+    let start = new Date(event.startDate);
+    let end = new Date(event.endDate);
+    let startDD = zeroBasedTime(start.getDate());
+    let startMM = zeroBasedTime(start.getMonth() + 1);
+
+    let startHH = zeroBasedTime(start.getHours());
+    let endHH = zeroBasedTime(end.getHours());
+    let startmm = zeroBasedTime(start.getMinutes());
+    let endmm = zeroBasedTime(end.getMinutes());
+
+    defaultValues.title = event.title;
+    defaultValues.description = event.description;
+    defaultValues.startTime = `${startHH}:${startmm}`;
+    defaultValues.endTime = `${endHH}:${endmm}`;
+    defaultValues.date = `${start.getFullYear()}-${startMM}-${startDD}`;
+  }
+
+  return defaultValues;
 };

@@ -6,7 +6,7 @@ import CalendarHeader from '../generic/CalendarHeader';
 import {WEEK_DAYS} from '../../utility/constants';
 import SingleDay from '../generic/SingleDay';
 import { getEventList, formatTime } from '../../utility/helpers';
-import AddEvent from '../Event/AddEvent';
+import EventForm from '../Event/EventForm';
 import EventLabel from '../Event/EventLabel';
 
 
@@ -22,12 +22,18 @@ let overlayStyle = {
 const MonthView = (props) => {
   let { days } = props;
   let eventList;
+  let todayDate = new Date().toDateString();
+  let date = '';
+
   let dayList = days.map((day, idx) => {
     eventList = day.events ? getEventList(day.events) : [];
-    let addEventBtn =  <Icon style={{ fontSize: 20 }} className="add-btn" color="primary"> add_circle </Icon>
+    let addEventBtn =  <Icon style={{ fontSize: 20 }}
+                        className="add-btn" color="primary">
+                        add_circle </Icon>;
 
+    date = day.date.toDateString();
     let dayContainer = (
-      <SingleDay >
+      <SingleDay todayDate={todayDate} date={date}>
         <div className="singleday-header">
           <div className="daynum"> {day.dd}</div>
             <Popup
@@ -38,7 +44,7 @@ const MonthView = (props) => {
               overlayStyle={overlayStyle}
               modal
             >
-             { close => ( <AddEvent day={day} close={close} time="7:00" /> ) }
+             { close => ( <EventForm day={day} close={close} time="7:00" /> ) }
             </Popup>
           </div>
           <div className="events-monthview">

@@ -1,5 +1,63 @@
 .calendar-navbar{
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-columns: 270px 2fr 1fr;
   border-bottom: #e0e0e0 1px solid;
+}
+
+#nav-btn {
+  background: #f5f5f5;
+  border-radius: 3px;
+  line-height: 32px;
+  font-size: 12px;
+  font-weight: 400;
+  display: flex;
+  white-space: nowrap;
+  max-width: 50px;
+  color: #686868;
+  padding: 0 8px;
+}
+
+#nav-btn:hover {
+  background: rgb(158, 158, 158, 0.2)
+}
+
+.view-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#dropIcon {
+  margin-left: 10px;
+}
+
+.date-nav {
+  display: flex;
+  flex-direction: row;
+}
+
+.nav-controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.date-label {
+  flex: 2;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 18px;
+  color: #686868;
+}
+
+.pointer {
+  cursor: pointer;
 }

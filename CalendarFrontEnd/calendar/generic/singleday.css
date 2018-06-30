@@ -4,7 +4,9 @@
   font-weight: 400;
   font-size: 14px;
 }
-
+.today {
+  background: #f5f5f5;
+}
 .daynum {
   padding-left: 8px;
 }

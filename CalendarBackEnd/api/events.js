@@ -20,8 +20,7 @@ router.post('/', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
   let id = req.params.id;
   let update = req.body;
-
-  Event.findByIdAndUpdate(id, update, {})
+  Event.findByIdAndUpdate(id, update, {new: true})
   .then(updatedEvent => res.json(updatedEvent))
   .catch(next);
 });

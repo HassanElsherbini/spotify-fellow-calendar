@@ -7,12 +7,15 @@ import HourLabels from '../generic/HourLabels';
 import SingleDay from '../generic/SingleDay';
 import {WEEK_DAYS} from '../../utility/constants';
 import HourList from '../generic/HourList';
-import AddEvent from '../Event/AddEvent';
+import EventForm from '../Event/EventForm';
 
 const DayView = ({day}) => {
 
   let dayOfWeek = day.date.getDay();
   let dayName = WEEK_DAYS[dayOfWeek];
+  let todayDate = new Date().toDateString();
+  let date = day.date.toDateString();
+
   let addEventBtn = (
     <div className="addbtn-container" title="New event">
       <Icon style={{ fontSize: 40 }} className="add-btn " color="primary"> add_circle </Icon>
@@ -30,7 +33,7 @@ const DayView = ({day}) => {
           overlayStyle={overlayStyle}
           modal
         >
-        { close => ( <AddEvent day={day} close={close} time="7:00" /> ) }
+        { close => ( <EventForm day={day} close={close} time="7:00" /> ) }
       </Popup>
     </div>
   ];
@@ -43,7 +46,7 @@ const DayView = ({day}) => {
       <div className="multiday-dayscontainer">
         <HourLabels />
         <div className="dayview-daycontainer">
-          <SingleDay>
+          <SingleDay todayDate={todayDate} date={date}>
             <div className="weekview-day">
               <HourList day={day} />
             </div>

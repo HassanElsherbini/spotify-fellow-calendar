@@ -16,11 +16,12 @@ class CalendarContainer extends Component{
   }
 
   render(){
+    let { selectedDate } = this.props;
     let view = this.getCalendarView();
     return (
       <div className="calendar-view">
         <CalendarNavBar onViewChange={this.handleViewChange} onDateChange={this.handleDateChange}
-         onDateReset={this.handleDateReset}/>
+         onDateReset={this.handleDateReset} date={selectedDate}/>
         <div className="calendar-container">
           <div className="calendar-sidebar"> </div>
           { view }
@@ -31,11 +32,12 @@ class CalendarContainer extends Component{
 
   getCalendarView(){
     let { selectedView, selectedDate} = this.props;
+
     switch (selectedView){
       case 1:
-        return <WeekView days={this.getWeekViewDays(selectedDate)} />;
+        return <WeekView days={this.getWeekViewDays(selectedDate)} selectedView={selectedView}/>;
       case 2:
-        return <DayView day={this.getDayViewDay(selectedDate)} />;
+        return <DayView day={this.getDayViewDay(selectedDate)} selectedView={selectedView}/>;
       default:
         return <MonthView days={this.getMonthViewDays(selectedDate)} />;
     }
@@ -117,6 +119,7 @@ class CalendarContainer extends Component{
 
 const mapStateToProps = ({events, selectedDate, selectedView}) => {
   let groupedEvents = groupEventsByTime(events);
+
   return {
     events: groupedEvents,
     selectedDate,

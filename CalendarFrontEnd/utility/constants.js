@@ -6,7 +6,9 @@ export const HOURS = [
 ];
 
 export const MONTHS = [
-  'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'
+  'January', 'February', 'March', 'April', 'May',
+  'June', 'July', 'August', 'Septemper', 'October',
+  'November', 'December'
 ];
 
 export const VIEWS = ['Month', 'Week', 'Day'];

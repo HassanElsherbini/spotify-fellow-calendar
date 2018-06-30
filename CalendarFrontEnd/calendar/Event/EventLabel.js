@@ -15,7 +15,7 @@ let overlayStyle = {
   backgroundColor: "rgba(0, 0, 0, 0.5)"
 };
 
-const EventLabel = ({event, day}) => {
+const EventLabel = ({event, day, selectedView}) => {
   let startStr = formatTime(event.startDate);
   let endStr = formatTime(event.endDate);
   let startDate = new Date(event.startDate);
@@ -23,8 +23,12 @@ const EventLabel = ({event, day}) => {
   let mm = startDate.getMonth();
   let weekDay = startDate.getDay();
 
+  let eventInfo = selectedView
+              ? `${startStr}-${endStr} ${event.title}`
+              : `${startStr}  ${event.title}`;
+
   let label = (
-    <div id="event-label" title={event.title}> {`${startStr}  ${event.title}`} </div>
+    <div id="event-label" title={event.title}>{eventInfo}</div>
   );
 
   return (
@@ -35,7 +39,11 @@ const EventLabel = ({event, day}) => {
     overlayStyle={overlayStyle}
     modal
     >
-    <EventviewPicker eventTimeInfor = {{startStr, endStr, dd, mm, weekDay}} event={event} day={day} />
+    {close => (<EventviewPicker
+              eventTimeInfor = {{startStr, endStr, dd, mm, weekDay}}
+              event={event}
+              day={day}
+              close={close} />) }
     </Popup>
   );
 };
