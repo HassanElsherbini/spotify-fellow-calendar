@@ -35,7 +35,7 @@ class CalendarContainer extends Component{
 
     switch (selectedView){
       case 1:
-        return <WeekView days={this.getWeekViewDays(selectedDate)} selectedView={selectedView}/>;
+        return <WeekView days={this.getWeekViewDays(selectedDate)} />;
       case 2:
         return <DayView day={this.getDayViewDay(selectedDate)} selectedView={selectedView}/>;
       default:

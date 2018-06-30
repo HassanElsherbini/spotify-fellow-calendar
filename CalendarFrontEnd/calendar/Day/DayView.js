@@ -9,7 +9,7 @@ import {WEEK_DAYS} from '../../utility/constants';
 import HourList from '../generic/HourList';
 import EventForm from '../Event/EventForm';
 
-const DayView = ({day}) => {
+const DayView = ({day, selectedView}) => {
 
   let dayOfWeek = day.date.getDay();
   let dayName = WEEK_DAYS[dayOfWeek];
@@ -48,7 +48,7 @@ const DayView = ({day}) => {
         <div className="dayview-daycontainer">
           <SingleDay todayDate={todayDate} date={date}>
             <div className="weekview-day">
-              <HourList day={day} />
+              <HourList day={day} selectedView={selectedView} />
             </div>
           </SingleDay>
         </div>

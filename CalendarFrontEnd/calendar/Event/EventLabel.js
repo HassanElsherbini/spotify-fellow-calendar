@@ -23,7 +23,7 @@ const EventLabel = ({event, day, selectedView}) => {
   let mm = startDate.getMonth();
   let weekDay = startDate.getDay();
 
-  let eventInfo = selectedView
+  let eventInfo = selectedView === 2
               ? `${startStr}-${endStr} ${event.title}`
               : `${startStr}  ${event.title}`;
 

@@ -10,7 +10,7 @@ import Icon from '@material-ui/core/Icon';
 
 import EventForm from '../Event/EventForm';
 
-const WeekView = ({days, selectedView}) => {
+const WeekView = ({days}) => {
   let addEventBtn = (
       <div className="addbtn-container" title="New event">
       <Icon style={{ fontSize: 20 }} className="add-btn " color="primary"> add_circle </Icon>
@@ -45,7 +45,7 @@ const WeekView = ({days, selectedView}) => {
     date = days[i].date.toDateString();
     day = (<SingleDay key={i} todayDate={todayDate} date={date}>
             <div className="weekview-day">
-              <HourList day={days[i]} selectedView={selectedView} />
+              <HourList day={days[i]} />
             </div>
            </SingleDay>);
     dayList.push(day);
