@@ -27,9 +27,10 @@ const MonthView = (props) => {
 
   let dayList = days.map((day, idx) => {
     eventList = day.events ? getEventList(day.events) : [];
-    let addEventBtn =  <Icon style={{ fontSize: 20 }}
-                        className="add-btn" color="primary">
-                        add_circle </Icon>;
+    let addEventBtn = (
+      <div className="addbtn-container" title="New event">
+        <Icon style={{ fontSize: 20 }} className="add-btn " color="primary"> add_circle </Icon>
+      </div>);
 
     date = day.date.toDateString();
     let dayContainer = (
