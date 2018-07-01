@@ -12,3 +12,7 @@ https://calendar-fellowship.herokuapp.com
 - [x] GET /events
 - [x] DELETE /events/:id
 - [x] PUT /events/:id
+
+### Run
+npm install
+npm run start-dev
