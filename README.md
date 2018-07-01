@@ -14,5 +14,5 @@ https://calendar-fellowship.herokuapp.com
 - [x] PUT /events/:id
 
 ### Run
-npm install
-npm run start-dev
+- npm install
+- npm run start-dev
