@@ -15,6 +15,8 @@ https://calendar-fellowship.herokuapp.com
 
 ### Run
 ```
+git clone https://github.com/HassanElsherbini/spotify-fellow-calendar.git
+cd spotify-fellow-calendar
 npm install
 npm run start-dev
 ```
